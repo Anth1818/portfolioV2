@@ -1,0 +1,138 @@
+---
+import { Icon } from "astro-icon/components";
+import IconWithLabel from "./IconWithLabel.astro";
+
+interface FolderItem {
+  iconName: string;
+  label: string;
+}
+
+interface Props {
+  items: FolderItem[];
+  folderName: string;
+}
+
+const { items, folderName } = Astro.props;
+const previewItems = items.slice(0, 4);
+
+// To ensure a consistent 2x2 grid even if there are fewer than 4 items (rare, but good to handle).
+const emptySlots = Array.from({ length: Math.max(0, 4 - previewItems.length) });
+---
+
+<app-folder class="relative flex min-h-[280px] w-full flex-col items-center justify-center">
+  <!-- Collapsed state (The Folder icon) -->
+  <div class="folder-collapsed flex cursor-pointer flex-col items-center transition-all duration-300 hover:scale-105">
+    <div class="grid h-28 w-28 grid-cols-2 grid-rows-2 gap-[6px] rounded-[28px] border border-white/10 bg-white/5 p-4 shadow-xl backdrop-blur-md">
+      {previewItems.map((item) => (
+        <div class="flex items-center justify-center rounded-lg bg-white/5 transition-colors group-hover:bg-white/10">
+          <Icon name={item.iconName} class="h-6 w-6 text-white/80" />
+        </div>
+      ))}
+      {emptySlots.map(() => (
+        <div class="rounded-lg bg-white/5" />
+      ))}
+    </div>
+    <span class="mt-4 text-sm font-semibold tracking-wide text-white/60">{folderName}</span>
+  </div>
+
+  <!-- Backdrop overlay for iOS modal effect -->
+  <div class="folder-backdrop fixed inset-0 z-40 hidden bg-black/60 opacity-0 backdrop-blur-sm transition-opacity duration-500"></div>
+
+  <!-- Expanded state (The Content overlay) -->
+  <div class="folder-expanded fixed top-1/2 left-1/2 z-50 hidden max-h-[85vh] w-[90vw] max-w-[500px] -translate-x-1/2 -translate-y-1/2 origin-center scale-90 flex-col rounded-[2.5rem] border border-white/10 bg-neutral-900/95 p-6 opacity-0 shadow-2xl backdrop-blur-2xl transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] md:p-8">
+    <!-- Header with title and close button -->
+    <div class="mb-8 flex items-center justify-between">
+      <h4 class="text-xl font-bold text-white/90">{folderName}</h4>
+      <button class="close-btn flex h-8 w-8 items-center justify-center rounded-full bg-white/10 text-white/60 transition-colors hover:bg-white/20 hover:text-white" aria-label="Close folder">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+    
+    <!-- Icons Grid -->
+    <div class="flex flex-wrap content-start justify-center gap-10 md:gap-8 overflow-y-auto md:overflow-hidden md:pb-12 pb-8">
+      {items.map((item) => (
+        <div class="folder-item opacity-0 translate-y-4 transition-all duration-300">
+          <IconWithLabel iconName={item.iconName} label={item.label} fontSize="text-5xl" />
+        </div>
+      ))}
+    </div>
+  </div>
+</app-folder>
+
+<script>
+  class AppFolder extends HTMLElement {
+    connectedCallback() {
+      const collapsed = this.querySelector('.folder-collapsed');
+      const expanded = this.querySelector('.folder-expanded');
+      const backdrop = this.querySelector('.folder-backdrop');
+      const closeBtn = this.querySelector('.close-btn');
+      const items = this.querySelectorAll('.folder-item');
+
+      let isOpen = false;
+
+      const openFolder = () => {
+        if (isOpen) return;
+        isOpen = true;
+        
+        expanded?.classList.remove('hidden');
+        backdrop?.classList.remove('hidden');
+        
+        // Force reflow to ensure transitions run
+        expanded?.getBoundingClientRect();
+        
+        expanded?.classList.remove('opacity-0', 'scale-90', 'pointer-events-none');
+        expanded?.classList.add('opacity-100', 'scale-100');
+        
+        backdrop?.classList.remove('opacity-0');
+        backdrop?.classList.add('opacity-100');
+        
+        collapsed?.classList.add('opacity-0', 'scale-90', 'pointer-events-none');
+
+        // Stagger items entry
+        items.forEach((item, index) => {
+          setTimeout(() => {
+            item.classList.remove('opacity-0', 'translate-y-4');
+          }, 150 + (index * 40));
+        });
+      };
+
+      const closeFolder = (e: Event) => {
+        e.stopPropagation();
+        if (!isOpen) return;
+        isOpen = false;
+        
+        expanded?.classList.remove('opacity-100', 'scale-100');
+        expanded?.classList.add('opacity-0', 'scale-90', 'pointer-events-none');
+        
+        backdrop?.classList.remove('opacity-100');
+        backdrop?.classList.add('opacity-0');
+        
+        collapsed?.classList.remove('opacity-0', 'scale-90', 'pointer-events-none');
+        
+        // Reset items to initial view state instantly so they animate back later
+        items.forEach((item) => {
+          item.classList.add('opacity-0', 'translate-y-4');
+        });
+        
+        // Finalize hiding after transition matches (500ms)
+        setTimeout(() => {
+          if (!isOpen) { 
+            expanded?.classList.add('hidden');
+            backdrop?.classList.add('hidden');
+          }
+        }, 500);
+      };
+
+      collapsed?.addEventListener('click', openFolder);
+      closeBtn?.addEventListener('click', closeFolder);
+      backdrop?.addEventListener('click', closeFolder);
+    }
+  }
+
+  if (!customElements.get('app-folder')) {
+    customElements.define('app-folder', AppFolder);
+  }
+</script>

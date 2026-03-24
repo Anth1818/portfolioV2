@@ -1,16 +1,17 @@
 ---
 import { Icon } from "astro-icon/components";
 
-
-const { titleCard, iconCardName, lang } = Astro.props;
+const { titleCard, iconCardName } = Astro.props;
 ---
 
-<aside
-  class="flex flex-col w-full m-4 h-1/4 items-center p-2 justify-evenly lg:w-72 lg:h-[400px] md:p-8 text-center text-section-secondary bg-neutral-200 rounded-lg shadow-lg"
->
-<Icon name={iconCardName} class={"w-14 h-14 "} />
-  <h2 class="text-xl font-bold font-sans">{titleCard}</h2>
-  <p class="font-sans md:text-md text-sm">
+<div class="glass-card p-8 rounded-3xl flex flex-col items-center text-center max-w-sm m-4 group hover:scale-[1.02] transition-all duration-300">
+  <div class="w-16 h-16 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center mb-6 group-hover:orange-gradient group-hover:text-white transition-all duration-500">
+    <Icon name={iconCardName} class="w-8 h-8" />
+  </div>
+  <h3 class="text-xl font-bold mb-4 text-white group-hover:text-tertiary-400 transition-colors">
+    {titleCard}
+  </h3>
+  <p class="text-neutral-400 leading-relaxed text-sm md:text-base">
     <slot />
   </p>
-</aside>
+</div>

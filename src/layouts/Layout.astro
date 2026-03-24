@@ -23,12 +23,20 @@ import "../styles/global.css";
     </script>
     <ClientRouter />
   </head>
-  <body>
+  <body class="animate-fade-in">
     <slot />
   </body>
 </html>
 
-<style>
+<style is:global>
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  .animate-fade-in {
+    animation: fadeIn 0.8s ease-out forwards;
+  }
+  
   html,
   body {
     padding: 0;
@@ -37,6 +45,21 @@ import "../styles/global.css";
     height: 100%;
     box-sizing: border-box;
     scroll-behavior: smooth;
-    background-color: var(--color-section-primary);
+    background-color: #0a0a0a;
+  }
+
+  /* Custom Scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #0a0a0a;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #262626;
+    border-radius: 10px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #404040;
   }
 </style>

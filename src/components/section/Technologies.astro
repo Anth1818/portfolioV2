@@ -1,113 +1,73 @@
 ---
 import LayoutSection from "../../layouts/LayoutSection.astro";
-import IconWithLabel from "../IconWithLabel.astro";
+import AppFolder from "../AppFolder.astro";
 
 const { lang } = Astro.props;
+
+const stackItems = [
+  { iconName: "Html5", label: "HTML" },
+  { iconName: "Css3", label: "CSS" },
+  { iconName: "Javascript", label: "JavaScript" },
+  { iconName: "Tailwind", label: "Tailwind" },
+  { iconName: "Typescript", label: "TypeScript" },
+  { iconName: "React", label: "React" },
+  { iconName: "Nextjs", label: "Next.js" },
+  { iconName: "Astro", label: "Astro" },
+  { iconName: "Nodejs", label: "Node.js" },
+  { iconName: "express", label: "Express" },
+  { iconName: "prisma", label: "Prisma" },
+  { iconName: "PostgreSQL", label: "PostgreSQL" },
+];
+
+const toolItems = [
+  { iconName: "Vite", label: "Vite" },
+  { iconName: "Git", label: "Git" },
+  { iconName: "MdiGithub", label: "GitHub" },
+  { iconName: "githubcopilot", label: "GitHub Copilot" },
+  { iconName: "gemini", label: "Gemini" },
+];
 ---
 
 <LayoutSection
-  title={lang === "es" ? "Tecnologías" : "Techologies"}
+  title={lang === "es" ? "Tecnologías" : "Technologies"}
   colorSection="section-primary"
   id="technologies"
 >
-  <div
-    class="flex flex-col justify-center items-center md:flex-row gap-8 p-8 md:justify-between md:items-start w-full h-full"
-  >
-    <aside
-      class="flex flex-col items-center justify-start w-full lg:w-3/4 h-3/4 p-8 text-center text-white bg-section-secondary rounded-lg shadow-lg"
-    >
-      <h2 class="text-2xl font-bold">Stack</h2>
-      <p class="hidden md:block mt-2">
+  <div class="container mx-auto max-w-6xl grid grid-cols-1 lg:grid-cols-2 gap-12">
+    <!-- Stack Card -->
+    <div class="glass-card p-10 rounded-3xl flex flex-col items-center text-center">
+      <div class="w-16 h-16 rounded-2xl orange-gradient flex items-center justify-center mb-6 shadow-lg shadow-orange-500/20">
+        <span class="text-2xl font-bold">01</span>
+      </div>
+      <h3 class="text-3xl font-bold mb-4 text-gradient">Stack</h3>
+      <p class="text-neutral-400 mb-10 max-w-md">
         {
           lang === "es"
-            ? "Estas son algunas de las tecnologías con las que he trabajado:"
-            : "Here are some of the technologies I work with:"
+            ? "Estas son algunas de las tecnologías web con las que he trabajado:"
+            : "Here are some of the web technologies I work with:"
         }
       </p>
 
-      <!-- Render when the screen is medium or larger -->
-      <div class="hidden md:flex md:flex-row gap-8 mt-4 md:flex-wrap">
-        <IconWithLabel iconName="Html5" label="HTML" fontSize="text-6xl" />
-        <IconWithLabel iconName="Css3" label="CSS" fontSize="text-6xl" />
-        <IconWithLabel
-          iconName="Javascript"
-          label="JavaScript"
-          fontSize="text-6xl"
-        />
-        <IconWithLabel
-          iconName="Tailwind"
-          label="Tailwind"
-          fontSize="text-6xl"
-        />
-        <IconWithLabel
-          iconName="Typescript"
-          label="TypeScript"
-          fontSize="text-6xl"
-        />
-        <IconWithLabel iconName="React" label="React" fontSize="text-6xl" />
-        <IconWithLabel iconName="Nextjs" label="Nextjs" fontSize="text-6xl" />
-        <IconWithLabel iconName="Astro" label="Astro" fontSize="text-6xl" />
+      <AppFolder folderName="Stack" items={stackItems} />
+    </div>
+
+    <!-- Tools Card -->
+    <div class="glass-card p-10 rounded-3xl flex flex-col items-center text-center">
+      <div class="w-16 h-16 rounded-2xl bg-neutral-800 border border-white/10 flex items-center justify-center mb-6 shadow-lg">
+        <span class="text-2xl font-bold">02</span>
       </div>
-
-      <!-- Render when the screen is small -->
-      <div class="flex flex-row flex-wrap w-full gap-8 mt-4 md:hidden">
-        <IconWithLabel iconName="Html5" label="HTML" fontSize="text-2xl" />
-        <IconWithLabel iconName="Css3" label="CSS" fontSize="text-2xl" />
-        <IconWithLabel
-          iconName="Javascript"
-          label="JavaScript"
-          fontSize="text-2xl"
-        />
-
-        <IconWithLabel iconName="React" label="React" fontSize="text-2xl" />
-        <IconWithLabel iconName="Nextjs" label="Nextjs" fontSize="text-2xl" />
-        <IconWithLabel iconName="Astro" label="Astro" fontSize="text-2xl" />
-        <IconWithLabel
-          iconName="Typescript"
-          label="TypeScript"
-          fontSize="text-2xl"
-        />
-      </div>
-    </aside>
-
-    <aside
-      class="flex flex-col items-center justify-start w-full lg:w-3/4 h-3/4 p-8 text-center text-white bg-section-secondary rounded-lg shadow-lg"
-    >
-      <h2 class="text-2xl font-bold"> {
-        lang === "es"
-          ? "Herramientas"
-          : "Tools"
-      }</h2>
-      <p class="hidden md:block mt-2">
+      <h3 class="text-3xl font-bold mb-4 text-gradient">
+        {lang === "es" ? "Herramientas" : "Tools"}
+      </h3>
+      <p class="text-neutral-400 mb-10 max-w-md">
         {
           lang === "es"
-            ? "Estas son algunas de las herramientas con las que he trabajado:"
-            : "Here are some of the tools I work with:"
+            ? "Estas son algunas de las herramientas de desarrollo e inteligencia artificial con las que he trabajado:"
+            : "Here are some of the development and AI tools I work with:"
         }
-        
       </p>
 
-      <!-- Render when the screen is medium or larger -->
-      <div class="hidden md:flex md:flex-row gap-8 mt-4">
-        <IconWithLabel iconName="Vite" label="Vite" fontSize="text-6xl" />
-        <IconWithLabel iconName="Git" label="Git" fontSize="text-6xl" />
-        <IconWithLabel
-          iconName="MdiGithub"
-          label="Github"
-          fontSize="text-6xl"
-        />
-      </div>
-
-      <!-- Render when the screen is small -->
-      <div class="flex flex-row flex-wrap gap-8 mt-4 md:hidden">
-        <IconWithLabel iconName="Vite" label="Vite" fontSize="text-2xl" />
-        <IconWithLabel iconName="Git" label="Git" fontSize="text-2xl" />
-        <IconWithLabel
-          iconName="MdiGithub"
-          label="Github"
-          fontSize="text-2xl"
-        />
-      </div>
-    </aside>
+      <AppFolder folderName={lang === "es" ? "Herramientas" : "Tools"} items={toolItems} />
+    </div>
   </div>
 </LayoutSection>

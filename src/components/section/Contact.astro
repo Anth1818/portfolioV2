@@ -1,172 +1,100 @@
 ---
 import { Icon } from "astro-icon/components";
 import LayoutSection from "../../layouts/LayoutSection.astro";
-import AnchorWithIconAndLabel from "../AnchorWithIconAndLabel.astro";
-import IconWithLabel from "../IconWithLabel.astro";
-import Spinner from "../Spinner.astro";
 import ContactForm from "../ContactForm";
+import { MotionSection } from "../ui/motion";
 
 const { lang } = Astro.props;
+
+const contactInfo = {
+  linkedin: {
+    label: "Linkedin",
+    url: "linkedin.com/in/anthony-ruiz-7820b7161/",
+    href: "https://www.linkedin.com/in/anthony-ruiz-7820b7161/"
+  },
+  github: {
+    label: "Github",
+    url: "github.com/Anth1818",
+    href: "https://github.com/Anth1818"
+  },
+  location: {
+    label: lang === "es" ? "Ubicación" : "Location",
+    value: "Caracas, Venezuela"
+  }
+}
 ---
 
 <LayoutSection
-  title={lang === "es" ? "Contacto" : "Contact"}
+  title={lang === "es" ? "Contáctame" : "Contact Me"}
   colorSection="section-primary"
   id="contact"
 >
-  <div
-    class="w-full h-auto md:p-10 gap-10 flex md:justify-around md:items-center flex-col md:flex-row"
-  >
-    <aside
-      class="flex flex-col gap-12 w-auto p-6 self-center-safe md:self-start"
-    >
-      <!-- Linkedin icon and link -->
-      <div class="flex gap-4 items-center">
-        <AnchorWithIconAndLabel
-          href="https://www.linkedin.com/in/anthony-ruiz-7820b7161/"
-          iconName="Linkedin"
-          label="Linkedin"
-        />
-        <span class="font-semibold" id="linkedin-text"
-          >linkedin.com/in/anthony-ruiz-7820b7161/</span
-        >
-        <div class="relative group">
-          <span
-            id="linkedin-tooltip"
-            class="hidden lg:block absolute -top-10 transform -translate-y-1/2 mt-2 text-white text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300 font-bold"
-          >
-            Copy to clipboard
-          </span>
-          <Icon
-            id="linkedin-copy"
-            name="Clipboard"
-            class="text-2xl cursor-pointer"
-          />
-          <span
-            id="linkedin-tooltip-mobile"
-            class="text-xs lg:hidden absolute -top-2 transform -translate-y-1/2"
-            >Copy</span
-          >
+  <MotionSection client:load className="container mx-auto max-w-6xl w-full">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+      <!-- Contact Info -->
+      <div class="flex flex-col gap-6">
+        <div class="glass-card p-8 rounded-3xl flex items-center gap-6 group hover:bg-white/10 transition-all duration-300">
+          <div class="w-14 h-14 rounded-2xl bg-white/5 flex items-center justify-center group-hover:orange-gradient transition-all duration-500">
+            <Icon name="Linkedin" class="w-7 h-7" />
+          </div>
+          <div class="flex-1 overflow-hidden">
+            <p class="text-sm text-neutral-400 font-medium mb-1">{contactInfo.linkedin.label}</p>
+            <p class="text-white font-bold truncate" id="linkedin-text">{contactInfo.linkedin.url}</p>
+          </div>
+          <button id="linkedin-copy" class="p-2 rounded-xl bg-white/5 hover:bg-white/10 text-neutral-400 hover:text-white transition-all cursor-pointer" title="Copy">
+            <Icon name="Clipboard" class="w-5 h-5" />
+          </button>
+        </div>
+
+        <div class="glass-card p-8 rounded-3xl flex items-center gap-6 group hover:bg-white/10 transition-all duration-300">
+          <div class="w-14 h-14 rounded-2xl bg-white/5 flex items-center justify-center group-hover:orange-gradient transition-all duration-500">
+            <Icon name="Github" class="w-7 h-7" />
+          </div>
+          <div class="flex-1 overflow-hidden">
+            <p class="text-sm text-neutral-400 font-medium mb-1">{contactInfo.github.label}</p>
+            <p class="text-white font-bold truncate" id="github-text">{contactInfo.github.url}</p>
+          </div>
+          <button id="github-copy" class="p-2 rounded-xl bg-white/5 hover:bg-white/10 text-neutral-400 hover:text-white transition-all cursor-pointer" title="Copy">
+            <Icon name="Clipboard" class="w-5 h-5" />
+          </button>
+        </div>
+
+        <div class="glass-card p-8 rounded-3xl flex items-center gap-6 group hover:bg-white/10 transition-all duration-300">
+          <div class="w-14 h-14 rounded-2xl bg-white/5 flex items-center justify-center group-hover:orange-gradient transition-all duration-500">
+            <Icon name="location" class="w-7 h-7" />
+          </div>
+          <div>
+            <p class="text-sm text-neutral-400 font-medium mb-1">{contactInfo.location.label}</p>
+            <p class="text-white font-bold">{contactInfo.location.value}</p>
+          </div>
         </div>
       </div>
 
-      <!-- Github icon and link -->
-      <div class="flex gap-4 items-center">
-        <AnchorWithIconAndLabel
-          href="https://github.com/anth1818"
-          iconName="Github"
-          label="Github"
-        />
-        <span class="font-semibold" id="github-text">github.com/anth1818</span>
-        <div class="relative group">
-          <span
-            id="github-tooltip"
-            class="hidden lg:block absolute -top-10 transform -translate-y-1/2 mt-2 text-white text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300 font-bold"
-          >
-            Copy to clipboard
-          </span>
-          <Icon
-            id="github-copy"
-            name="Clipboard"
-            class="text-2xl cursor-pointer"
-          />
-          <span
-            id="github-tooltip-mobile"
-            class="text-xs lg:hidden absolute -top-2 transform -translate-y-1/2"
-            >Copy</span
-          >
-        </div>
+      <!-- Form -->
+      <div class="glass-card p-8 md:p-10 rounded-3xl">
+        <ContactForm client:load lang={lang}/>
       </div>
-
-      <!-- Location  -->
-      <div class="flex gap-4 items-center">
-        <IconWithLabel iconName="location" label="Location" class="text-2xl" />
-        <span class="font-semibold">Caracas,Venezuela</span>
-      </div>
-    </aside>
-
-    <ContactForm client:load lang={lang}/>
-  </div>
+    </div>
+  </MotionSection>
 </LayoutSection>
 
-<!-- <script type="text/javascript">
-  const langUrl = window.location.href;
-  const IsSpanish = langUrl.includes("es");
-
-  const form = document.getElementById("contact-form");
-
-  form?.addEventListener("submit", function (event) {
-    event.preventDefault();
-    const spinner = document.getElementById("spinner");
-    const textSend = document.getElementById("send");
-    spinner?.classList.remove("hidden");
-    spinner?.classList.add("flex");
-    textSend?.classList.add("hidden");
-
-    emailjs
-      .sendForm("contact_service", "contact_template", this)
-      .then(
-        () => {
-          event.preventDefault();
-          if (IsSpanish) {
-            window.location.href = "/EmailSentEs";
-          } else {
-            window.location.href = "/EmailSent";
-          }
-
-          console.log("Email sent successfully");
-        },
-        (error) => {
-          if (IsSpanish) {
-            alert("Error al enviar el email, por favor intente nuevamente ");
-          }
-          alert("Error sending email, please try again.");
-          console.log("Error sending email: ", error);
-        },
-      )
-      .finally(() => {
-        spinner?.classList.add("hidden");
-        textSend?.classList.remove("hidden");
-        console.log("hola");
-      });
-  });
-</script> -->
-
 <script>
-  // Función para copiar texto al portapapeles
-  function copyToClipboard(textId: string, tooltipId: string) {
+  function copyToClipboard(textId: string, buttonId: string) {
     const textElement = document.getElementById(textId);
-    const tooltipElement = document.getElementById(tooltipId);
-    const tooltipMobileElement = document.getElementById(`${tooltipId}-mobile`);
-    if (tooltipMobileElement) {
-      tooltipMobileElement.innerText = "Copied";
-      setTimeout(() => {
-        tooltipMobileElement.innerText = "Copy";
-      }, 2000); // Cambia el texto de nuevo después de 2 segundos
-    }
-
-    if (textElement) {
+    const button = document.getElementById(buttonId);
+    
+    if (textElement && button) {
       const text = textElement.innerText;
       navigator.clipboard.writeText(text).then(() => {
-        if (tooltipElement) {
-          tooltipElement.innerText = "Copied";
-          setTimeout(() => {
-            tooltipElement.innerText = "Copy to clipboard";
-          }, 2000); // Cambia el texto de nuevo después de 2 segundos
-        }
+        const originalHtml = button.innerHTML;
+        button.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 text-green-500"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+        setTimeout(() => {
+          button.innerHTML = originalHtml;
+        }, 2000);
       });
     }
   }
 
-  // Agregar eventos a los botones de copiar
-  const linkedinCopyButton = document.getElementById("linkedin-copy");
-  const githubCopyButton = document.getElementById("github-copy");
-
-  linkedinCopyButton?.addEventListener("click", () =>
-    copyToClipboard("linkedin-text", "linkedin-tooltip"),
-  );
-
-  githubCopyButton?.addEventListener("click", () =>
-    copyToClipboard("github-text", "github-tooltip"),
-  );
+  document.getElementById("linkedin-copy")?.addEventListener("click", () => copyToClipboard("linkedin-text", "linkedin-copy"));
+  document.getElementById("github-copy")?.addEventListener("click", () => copyToClipboard("github-text", "github-copy"));
 </script>

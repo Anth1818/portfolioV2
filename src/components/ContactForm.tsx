@@ -60,7 +60,7 @@ export default function ContactForm({ lang }: ContactFormProps) {
 
   return (
     <>
-      <section className="md:w-1/2 w-full">
+      <section className="w-full">
         <form ref={formRef} onSubmit={handleSubmit} className="flex flex-col gap-4 w-full p-4 justify-center items-center">
           <input
             type="text"

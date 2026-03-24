@@ -1,17 +1,19 @@
 ---
-
 const {title, colorSection, id} = Astro.props
 const arrayTitle = title.split(' ')
-
 const phraseModified = arrayTitle.length === 1 ? false : arrayTitle[arrayTitle.length - 1]
-
 const titleModified = arrayTitle.filter((word: string) => word !== phraseModified).join(' ')
 ---
 
 <section
-id={id}
-  class={`flex flex-col items-center justify-start gap-10 w-full min-h-dvh bg-${colorSection} text-white`}
+  id={id}
+  class={`flex flex-col items-center justify-start gap-16 w-full py-24 px-6 bg-${colorSection} text-white`}
 >
- <h2 class=" pt-10 text-3xl border-b-2 pb-2 border-b-tertiary-400">{titleModified} <span class="text-tertiary-400">{phraseModified}</span></h2>
-    <slot></slot>
+  <div class="flex flex-col items-center text-center">
+    <h2 class="text-4xl md:text-5xl font-bold tracking-tight mb-4">
+      {titleModified} <span class="text-tertiary-400">{phraseModified}</span>
+    </h2>
+    <div class="w-20 h-1 orange-gradient rounded-full"></div>
+  </div>
+  <slot></slot>
 </section>

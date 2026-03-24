@@ -41,5 +41,11 @@ const { lang } = Astro.props;
         : "I have a knack for identifying and solving problems. I enjoy the challenge of debugging and finding solutions to complex issues."
       }
     </SoftSkillsCard>
+    <SoftSkillsCard iconCardName="AI" titleCard={lang === "es" ? "Uso estratégico de IA" : "Strategic Use of AI"}>
+      {lang === "es"
+        ? "Aplico herramientas de inteligencia artificial para mejorar la productividad y la calidad en el desarrollo de software. Mi enfoque se centra en un uso responsable, investigando y validando las soluciones generadas para asegurar que sean correctas y fiables."
+        : "I leverage AI tools to enhance productivity and quality in software development. My approach focuses on responsible use, researching and validating the generated solutions to ensure they are accurate and reliable."
+      }
+    </SoftSkillsCard>
   </div>
 </LayoutSection>

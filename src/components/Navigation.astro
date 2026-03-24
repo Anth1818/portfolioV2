@@ -10,9 +10,9 @@ const contenNav = {
     about: "Sobre mí",
     projects: "Proyectos",
     technologies: "Tecnologías",
-    softSkills: "Habilidades Blandas",
+    softSkills: "Soft Skills",
     contact: "Contáctame",
-    english:"Ingles"
+    english:"Inglés"
   },
   labelEn: {
     home: "Home",
@@ -23,21 +23,17 @@ const contenNav = {
     contact: "Contact me",
     spanish: "Spanish"
   }
-
-  
 }
-
 ---
 
 <nav
-    class="hidden lg:absolute top-0 left-0 lg:flex lg:flex-row w-full gap-1 justify-around items-center bg-section-primary text-white h-20 z-10">
-      <img src={logo.src} alt="logo" class="w-20 h-20" />
-      {/*
-        Render navigation links and language switcher based on the `lang` prop and `contenNav`
-      */}
-      <!-- ------links -->
-      <section class="flex gap-10">
-        <ul class="flex gap-10 items-center">
+    class="hidden lg:flex fixed top-0 left-0 w-full h-20 items-center justify-between px-10 glass z-50 transition-all duration-300">
+      <div class="flex items-center gap-2">
+        <img src={logo.src} alt="logo" class="w-12 h-12" />
+      </div>
+      
+      <div class="flex items-center gap-12">
+        <ul class="flex gap-8 items-center font-medium">
           <li><a class="nav-link" href="#home">{lang === "es" ? contenNav.labelEs.home : contenNav.labelEn.home}</a></li>
           <li><a class="nav-link" href="#about">{lang === "es" ? contenNav.labelEs.about : contenNav.labelEn.about}</a></li>
           <li><a class="nav-link" href="#projects">{lang === "es" ? contenNav.labelEs.projects : contenNav.labelEn.projects}</a></li>
@@ -45,16 +41,15 @@ const contenNav = {
           <li><a class="nav-link" href="#soft-skills">{lang === "es" ? contenNav.labelEs.softSkills : contenNav.labelEn.softSkills}</a></li>
         </ul>
   
-        <!-- contact me -->
-        <a
-          href="#contact"
-          class="p-1.5 w-36 rounded-3xl bg-tertiary-400 text-white font-semibold text-center nav-link"
-        >
-          {lang === "es" ? contenNav.labelEs.contact : contenNav.labelEn.contact}
-        </a>
-      </section>
-  
-      <Language lang={lang} />
-    
+        <div class="flex items-center gap-6">
+          <a
+            href="#contact"
+            class="px-6 py-2 rounded-full orange-gradient text-white font-semibold text-center hover:scale-105 hover:shadow-lg hover:shadow-orange-500/20 transition-all duration-300"
+          >
+            {lang === "es" ? contenNav.labelEs.contact : contenNav.labelEn.contact}
+          </a>
+          <Language lang={lang} />
+        </div>
+      </div>
   </nav>
 

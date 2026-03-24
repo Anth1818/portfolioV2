@@ -1,11 +1,10 @@
 ---
 const {lang} = Astro.props
+const year = new Date().getFullYear();
 ---
 
-<footer class="bg-section-secondary text-white p-4 md:h-10 h-20">
-    <p class="text-center">
-        {lang === "es"
-          ? "El diseño base del portafolio fue provisto por figma.com/@riead y modificado por mí"
-          : "Base design of the portfolio provided by figma.com/@riead, modified by me"}
+<footer class="bg-section-primary border-t border-white/5 py-12 px-6"> 
+        <p class="text-neutral-500 text-sm text-center">
+            &copy; {year} Anthony Ruiz. {lang === "es" ? "Todos los derechos reservados." : "All rights reserved."}
         </p>
 </footer>

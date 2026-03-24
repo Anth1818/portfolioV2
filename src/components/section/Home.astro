@@ -5,6 +5,7 @@ import hero from "src/assets/hero-image.jpg"
 import MobileTop from "../MobileTop.astro";
 import CV_ES from "src/assets/anthony_ruiz_CV_español.pdf"
 import CV_EN from "src/assets/anthony_ruiz_english_CV.pdf"
+import { Reveal, MotionSection } from "../ui/motion";
 
 const {lang} = Astro.props
 
@@ -12,106 +13,95 @@ const content = {
   es: {
     greeting: "Hola, soy",
     name: "Anthony Ruiz",
-    title: "Y soy un <span class='text-tertiary-200'>Desarrollador  Web Frontend</span>",
-    descriptionLg: "Soy un apasionado Desarrollador Frontend con un fuerte enfoque en crear aplicaciones web atractivas y fáciles de usar. Siempre estoy dispuesto a aprender y crecer en el campo del desarrollo web.",
-    descriptionSm: "Soy un apasionado Desarrollador Frontend enfocado en crear aplicaciones web atractivas y fáciles de usar."
+    title: "Y soy un <span class='text-tertiary-200'>Desarrollador Web </span>",
+    descriptionLg: "Soy un apasionado Desarrollador con un fuerte enfoque en crear aplicaciones web atractivas y fáciles de usar. Siempre estoy dispuesto a aprender y crecer en el campo del desarrollo web.",
+    descriptionSm: "Soy un apasionado Desarrollador enfocado en crear aplicaciones web atractivas y fáciles de usar."
   },
   en: {
     greeting: "Hi, It's me",
     name: "Anthony Ruiz",
-    title: "And I'm a <span class='text-tertiary-200'>Frontend web developer</span>",
-    descriptionLg: "I am a passionate Frontend Developer with a strong focus on creating user-friendly and visually appealing web applications. I am always eager to learn and grow in the field of web development.",
-    descriptionSm: "I am a passionate Frontend Developer with a strong focus on creating user-friendly and visually appealing web applications."
+    title: "And I'm a <span class='text-tertiary-200'>web developer</span>",
+    descriptionLg: "I am a passionate Developer with a strong focus on creating user-friendly and visually appealing web applications. I am always eager to learn and grow in the field of web development.",
+    descriptionSm: "I am a passionate Developer with a strong focus on creating user-friendly and visually appealing web applications."
   }
 }
-
 ---
 
-<!-- ---Home -->
-<section id="home" >
-  <!-- ----nav -->
-   {lang === "es" ? <Navigation lang={lang}/> : <Navigation />}
+<section id="home" class="relative min-h-screen overflow-hidden">
+  {lang === "es" ? <Navigation lang={lang}/> : <Navigation />}
+  <MobileTop lang={lang} />
 
+  <!-- Background Hero -->
+  <div class="absolute inset-0 z-0">
+    <img
+      src={hero.src}
+      alt="hero background"
+      class="w-full h-full object-cover grayscale-[0.2]"
+    />
+    <div class="absolute inset-0 bg-gradient-to-r from-black via-black/80 to-transparent"></div>
+  </div>
 
-  <!-- nav mobile -->
-  <!-- <div class="absolute z-10">
-   <MobileNavigation client:load />
-  </div> -->
-
-  <!-- mobile logo and btn language -->
-   <MobileTop lang={lang} />
-
-  <!-- ----hero -->
-  <section>
-    <div>
-      <img
-        src={hero.src}
-        alt="hero image"
-        class="w-full h-screen object-cover object-center"
-        loading="lazy"
-      />
-    </div>
-    <!-- ----layer blue -->
-    <div
-      class="absolute top-0 left-0 w-full h-full bg-section-secondary opacity-80"
-    >
-    </div>
-
-    <!-- information -->
-    <article class="absolute top-20 lg:top-35 lg:left-10 w-full lg:w-1/2">
-      <div class="flex flex-col justify-center gap-5 lg:ml-10 m-4">
-        <h1 class="text-3xl text-white font-bold">
-          <span class="text-tertiary-200">{lang === "es" ? content.es.greeting : content.en.greeting}</span>
-          <br />
-          <span class="font-mono text-3xl inline-block">{lang === "es" ? content.es.name : content.en.name}</span>
+  <div class="relative z-10 container mx-auto px-6 h-screen flex flex-col justify-center">
+    <div class="max-w-3xl">
+      <Reveal client:load>
+        <h1 class="text-4xl lg:text-6xl font-bold text-white mb-2">
+          <span class="text-tertiary-400 text-xl lg:text-2xl block mb-2 font-mono">{lang === "es" ? content.es.greeting : content.en.greeting}</span>
+          {lang === "es" ? content.es.name : content.en.name}
         </h1>
-        <h2 class="text-4xl text-white font-semibold">
+      </Reveal>
+
+      <Reveal client:load delay={0.2} overflow="visible">
+        <h2 class="text-3xl lg:text-5xl font-bold text-white mb-6">
           <span set:html={lang === "es" ? content.es.title : content.en.title}></span>
         </h2>
-        <p class="text-white text-lg font-semibold hidden lg:block">
+      </Reveal>
+
+      <Reveal client:load delay={0.4}>
+        <p class="text-neutral-300 text-lg lg:text-xl mb-8 leading-relaxed max-w-2xl">
           {lang === "es" ? content.es.descriptionLg : content.en.descriptionLg}
         </p>
-        <p class="text-white text-lg font-semibold lg:hidden">
-          {lang === "es" ? content.es.descriptionSm : content.en.descriptionSm}
-        </p>
-        <!-- social media icons -->
+      </Reveal>
 
-        <div
-          class="flex gap-10 justify-center lg:gap-5 lg:w-full lg:justify-start"
-        >
-          <AnchorWithIconAndLabel
-            href="https://www.linkedin.com/in/anthonyruiz1818/"
-            iconName="Linkedin"
-            label="Linkedin"
-          />
-          <AnchorWithIconAndLabel
-            href="https://github.com/Anth1818"
-            iconName="Github"
-            label="Github"
-          />
-          <AnchorWithIconAndLabel
-            href="https://discord.com/channels/@me"
-            iconName="Discord"
-            label="Discord"
-          />
+      <div class="flex flex-wrap gap-4 items-center">
+        <Reveal client:load delay={0.6} overflow="visible">
+          <a
+            href={lang === 'es' ? CV_ES : CV_EN}
+            download
+            class="px-8 py-3 rounded-full orange-gradient text-white font-bold text-lg hover:scale-105 hover:shadow-xl hover:shadow-orange-500/20 transition-all duration-300"
+          >
+            {lang === "es" ? "Descargar CV" : "Download CV"}
+          </a>
+        </Reveal>
+
+        <div class="flex gap-6 ml-4">
+          <Reveal client:load delay={0.8} overflow="visible">
+            <div class="flex pt-4 gap-10 md:gap-6">
+              <AnchorWithIconAndLabel
+                href="https://www.linkedin.com/in/anthony-ruiz-7820b7161/"
+                iconName="Linkedin"
+                label="Linkedin"
+              />
+              <AnchorWithIconAndLabel
+                href="https://github.com/Anth1818"
+                iconName="Github"
+                label="Github"
+              />
+              <AnchorWithIconAndLabel
+                href="https://discord.com/channels/@me"
+                iconName="Discord"
+                label="Discord"
+              />
+            </div>
+          </Reveal>
         </div>
       </div>
-      <div class="flex lg:w-full justify-center lg:justify-start mt-10 lg:mt-2">
-        <a
-        href={lang === 'es' ? CV_ES : CV_EN}
-        download
-          class="w-[250px] p-2 m-8 rounded-3xl bg-tertiary-400 text-white font-semibold text-center block text-lg hover:bg-tertiary-200 transition duration-300 ease-in-out"
-        >
-          {lang === "es" ? "Descargar CV" : "Download CV"}
-        </a>
-      </div>
-    </article>
-  </section>
-</section>
+    </div>
+  </div>
 
-<style>
-  .font-logo {
-    font-family: "fa-brands-400", cursive;
-    font-size: 3rem;
-  }
-</style>
+  <!-- Scroll Indicator -->
+  <div class="absolute bottom-10 left-1/2 -translate-x-1/2 hidden lg:block">
+    <div class="w-6 h-10 border-2 border-white/30 rounded-full flex justify-center p-1">
+      <div class="w-1 h-2 bg-tertiary-400 rounded-full animate-bounce"></div>
+    </div>
+  </div>
+</section>
