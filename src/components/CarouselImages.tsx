@@ -34,17 +34,17 @@ export function CarouselImg({arrayImg, slug}: CarouselImgProps) {
   }, [api])
 
   return (
-    <div className="mx-auto md:w-[1000px] px-2 py-4">
+    <div className="mx-auto md:w-[1080px] px-2 py-4">
      <Carousel setApi={setApi} className="w-full">
         <CarouselContent >
           {arrayImg.map((_, index) => (
             <CarouselItem key={index} >
               <Card >
-                <CardContent className="flex md:w-[1000px] md:h-[500px] xs:w-[300px] aspect-square items-center justify-center p-6">
+                <CardContent className="flex md:w-[1080px] md:h-[500px] xs:w-[300px] aspect-square items-center justify-center p-6">
                   <img
                     src={arrayImg[index]}
                     alt={`Image ${index + 1}`}
-                    className=" md:object-contain rounded-lg "
+                    className=" md:object-fill rounded-lg "
                     loading="lazy"
                   />
                 </CardContent>
@@ -52,8 +52,8 @@ export function CarouselImg({arrayImg, slug}: CarouselImgProps) {
             </CarouselItem>
           ))}
         </CarouselContent>
-        <CarouselPrevious className="hidden md:flex"/>
-        <CarouselNext className="hidden md:flex" />
+        <CarouselPrevious className="hidden md:flex left-2 top-1/2 z-10 -translate-y-1/2 bg-background/90 shadow-md hover:bg-background" />
+        <CarouselNext className="hidden md:flex right-2 top-1/2 z-10 -translate-y-1/2 bg-background/90 shadow-md hover:bg-background" />
       </Carousel>
       <div className="py-2 text-center text-sm text-muted-foreground">
         Slide {current} of {count}

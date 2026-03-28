@@ -29,6 +29,7 @@ techStack:
   - "Nodejs"
   - "PostgreSQL"
 
+year: "2025"
 ---
 
 **Activity-management-system** The system includes features such as login and authentication, a form to add information about internal activities, and external activities like a mobile attention service. It also provides a scheduling feature for both internal and external activities, a module for graphical data representation, a user management module, and modules for managing the activities previously added. The system is designed to be user-friendly and efficient, allowing users to easily navigate through the various features and functionalities. The use of React for the frontend ensures a responsive and interactive user experience, while Node.js for the backend provides a robust and scalable solution for handling requests and managing data. PostgreSQL is used as the database to securely store and manage all the information related to the activities and users.

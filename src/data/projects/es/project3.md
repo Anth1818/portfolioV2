@@ -28,6 +28,7 @@ techStack:
   - "Nodejs"
   - "PostgreSQL"
 
+year: "2025"
 ---
 
 **Sistema de gestión de actividades** El sistema incluye funcionalidades como inicio de sesión y autenticación, un formulario para agregar información sobre actividades internas y actividades externas como un servicio móvil de atención. También proporciona una función de programación para actividades tanto internas como externas, un módulo para la representación gráfica de datos, un módulo de gestión de usuarios y módulos para administrar las actividades previamente agregadas. El sistema está diseñado para ser intuitivo y eficiente, permitiendo a los usuarios navegar fácilmente por las diferentes funciones y características. El uso de React para el frontend garantiza una experiencia de usuario interactiva y responsiva, mientras que Node.js en el backend proporciona una solución robusta y escalable para el manejo de solicitudes y gestión de datos. PostgreSQL se utiliza como base de datos para almacenar y gestionar de forma segura toda la información relacionada con las actividades y los usuarios.

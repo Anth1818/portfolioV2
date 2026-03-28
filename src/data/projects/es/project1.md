@@ -29,6 +29,8 @@ techStack:
   - "React"
   - "Nodejs"
   - "PostgreSQL"
+
+year: "2024"
 ---
 
 **Sistema de control de asistencia para una institución.** El sistema permite registrar la hora de entrada y salida de los empleados, también permite obtener un reporte de cada empleado por día, semana o mes, y cuenta con diferentes filtros para buscar por trabajador, departamento o rango de fechas. El sistema fue desarrollado usando React para el frontend y Nodejs para el backend. La base de datos utilizada fue PostgreSQL. El sistema fue desarrollado en 2024.

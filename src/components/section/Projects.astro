@@ -4,31 +4,51 @@ import LayoutSection from "../../layouts/LayoutSection.astro";
 import { getCollection } from "astro:content";
 import { StaggerContainer, StaggerItem } from "../ui/motion";
 
-const {lang} = Astro.props
+const { lang } = Astro.props;
 
 const FirstProjectsEn = await getCollection("projectsEn");
 const FirstProjectsEs = await getCollection("projectsEs");
-const Firstprojects = lang === "es" ? FirstProjectsEs : FirstProjectsEn;
 const LatestProjectsEn = await getCollection("latestProjectsEn");
 const LatestProjectsEs = await getCollection("latestProjectsEs");
-const LatestProjects = lang === "es" ? LatestProjectsEs : LatestProjectsEn;
+
+const getStartYear = (year: string) => {
+  const matchedYear = year.match(/\d{4}/);
+  return matchedYear ? Number(matchedYear[0]) : Number.POSITIVE_INFINITY;
+};
+
+const sortByYearAsc = <T extends { data: { year: string } }>(items: T[]) =>
+  [...items].sort((a, b) => getStartYear(a.data.year) - getStartYear(b.data.year));
+
+const FirstProjectsEnSorted = sortByYearAsc(FirstProjectsEn);
+const FirstProjectsEsSorted = sortByYearAsc(FirstProjectsEs);
+const LatestProjectsEnSorted = sortByYearAsc(LatestProjectsEn);
+const LatestProjectsEsSorted = sortByYearAsc(LatestProjectsEs);
+
+const Firstprojects = lang === "es" ? FirstProjectsEsSorted : FirstProjectsEnSorted;
+const LatestProjects =
+  lang === "es" ? LatestProjectsEsSorted : LatestProjectsEnSorted;
 
 ---
 
-<LayoutSection title={lang === "es" ? "Mis Proyectos" : "My Projects"} colorSection="section-secondary" id="projects">
-  <div class="max-w-7xl mx-auto flex flex-col gap-16">
-    
+<LayoutSection
+  title={lang === "es" ? "Mis Proyectos" : "My Projects"}
+  colorSection="section-secondary"
+  id="projects"
+>
+  <div class="max-w-7xl mx-auto">
     <!-- Últimos Proyectos -->
-
-    <div>
-      <h3 class="text-2xl font-bold mb-6 text-tertiary-400">
-        {lang === "es" ? "Últimos proyectos" : "Latest projects"}
-      </h3>
-      <StaggerContainer client:load className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {LatestProjects.map((project) => (
+    <h3 class="text-2xl font-bold mb-6 text-tertiary-400">
+      {lang === "es" ? "Últimos proyectos" : "Latest projects"}
+    </h3>
+    <StaggerContainer
+      client:load
+      className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
+    >
+      {
+        LatestProjects.map((project) => (
           <StaggerItem client:load>
-            <div class="group relative glass-card rounded-2xl overflow-hidden hover:scale-[1.02] transition-all duration-500 hover:shadow-2xl hover:shadow-orange-500/10 md:w-3xl flex flex-col">
-              <div class="aspect-video overflow-hidden">
+            <div class="group relative glass-card rounded-2xl overflow-hidden hover:scale-[1.02] transition-all duration-500 hover:shadow-2xl hover:shadow-orange-500/10 max-w-sm mx-auto w-full flex flex-col">
+              <div class="aspect-[4/3] overflow-hidden">
                 <img
                   src={project.data.images[0]}
                   alt={project.data.title}
@@ -36,11 +56,16 @@ const LatestProjects = lang === "es" ? LatestProjectsEs : LatestProjectsEn;
                   transition:name={project.data.slug}
                 />
               </div>
-              
-              <div class="p-6 flex flex-col flex-grow">
-                <h3 class="text-xl font-bold mb-2 group-hover:text-tertiary-400 transition-colors duration-300">
-                  {project.data.title}
-                </h3>
+
+              <div class="p-4 flex flex-col flex-grow">
+                <div class="flex justify-between items-start mb-2">
+                  <h3 class="text-md font-bold mb-2 group-hover:text-tertiary-400 transition-colors duration-300">
+                    {project.data.title}
+                  </h3>
+                  <h4 class="text-xs font-normal text-neutral-400 mb-2">
+                    {project.data.year}
+                  </h4>
+                </div>
                 <div class="flex flex-wrap gap-2 mb-4">
                   {project.data.techStack.slice(0, 3).map((tech) => (
                     <span class="text-xs px-2 py-1 rounded-full bg-white/10 text-neutral-300">
@@ -48,17 +73,21 @@ const LatestProjects = lang === "es" ? LatestProjectsEs : LatestProjectsEn;
                     </span>
                   ))}
                 </div>
-                
+
                 <div class="mt-auto flex justify-between items-center">
-                  <a 
-                    href={lang === "es" ? `/es/${project.data.slug}` : `/${project.data.slug}`}
+                  <a
+                    href={
+                      lang === "es"
+                        ? `/es/${project.data.slug}`
+                        : `/${project.data.slug}`
+                    }
                     class="flex items-center gap-2 text-sm font-semibold text-tertiary-400 hover:text-tertiary-200 transition-colors"
                   >
                     {lang === "es" ? "Ver detalles" : "View details"}
                     <Icon name="Link" class="w-4 h-4" />
                   </a>
-                  <a 
-                    href={project.data.github} 
+                  <a
+                    href={project.data.github}
                     target="_blank"
                     class="p-2 rounded-full bg-white/5 hover:bg-white/10 transition-colors"
                     aria-label="GitHub"
@@ -69,28 +98,34 @@ const LatestProjects = lang === "es" ? LatestProjectsEs : LatestProjectsEn;
               </div>
             </div>
           </StaggerItem>
-        ))}
-        <!-- Placeholder
-        <StaggerItem client:load>
-          <div class="group relative glass-card rounded-2xl overflow-hidden min-h-[300px] h-full flex flex-col items-center justify-center border-2 border-dashed border-white/20 hover:border-white/40 transition-colors duration-300">
-            <p class="text-neutral-400 font-medium text-lg">
-              {lang === "es" ? "Próximamente..." : "Coming soon..."}
-            </p>
-          </div>
-        </StaggerItem> -->
-      </StaggerContainer>
-    </div>
+        ))
+      }
+      <!-- Placeholder -->
+      <StaggerItem client:load>
+        <div
+          class="group relative glass-card rounded-2xl overflow-hidden min-h-[300px] h-full flex flex-col items-center justify-center border-2 border-dashed border-white/20 hover:border-white/40 transition-colors duration-300"
+        >
+          <p class="text-neutral-400 font-medium text-lg">
+            {lang === "es" ? "Próximamente..." : "Coming soon..."}
+          </p>
+        </div>
+      </StaggerItem>
+    </StaggerContainer>
 
     <!-- Primeros Proyectos -->
-    <div>
-      <h3 class="text-2xl font-bold mb-6 text-tertiary-400">
-        {lang === "es" ? "Primeros proyectos" : "First projects"}
-      </h3>
-      <StaggerContainer client:load className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {Firstprojects.map((project) => (
+
+    <h3 class="text-2xl font-bold mb-6 text-tertiary-400 mt-6">
+      {lang === "es" ? "Primeros proyectos" : "First projects"}
+    </h3>
+    <StaggerContainer
+      client:load
+      className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
+    >
+      {
+        Firstprojects.map((project) => (
           <StaggerItem client:load>
-            <div class="group relative glass-card rounded-2xl overflow-hidden hover:scale-[1.02] transition-all duration-500 hover:shadow-2xl hover:shadow-orange-500/10 md:w-3xl flex flex-col">
-              <div class="aspect-video overflow-hidden">
+            <div class="group relative glass-card rounded-2xl overflow-hidden hover:scale-[1.02] transition-all duration-500 hover:shadow-2xl hover:shadow-orange-500/10 max-w-sm mx-auto w-full flex flex-col">
+              <div class="aspect-[4/3] overflow-hidden">
                 <img
                   src={project.data.images[0]}
                   alt={project.data.title}
@@ -98,29 +133,38 @@ const LatestProjects = lang === "es" ? LatestProjectsEs : LatestProjectsEn;
                   transition:name={project.data.slug}
                 />
               </div>
-              
-              <div class="p-6 flex flex-col flex-grow">
-                <h3 class="text-xl font-bold mb-2 group-hover:text-tertiary-400 transition-colors duration-300">
-                  {project.data.title}
-                </h3>
+
+              <div class="p-4 flex flex-col flex-grow">
+                <div class="flex justify-between items-start mb-2">
+                  <h3 class="text-md font-bold mb-2 group-hover:text-tertiary-400 transition-colors duration-300">
+                    {project.data.title}
+                  </h3>
+                  <h4 class="text-xs font-normal text-neutral-400 mb-2">
+                    {project.data.year}
+                  </h4>
+                </div>
                 <div class="flex flex-wrap gap-2 mb-4">
                   {project.data.techStack.slice(0, 3).map((tech) => (
-                    <span class="text-xs px-2 py-1 rounded-full bg-white/10 text-neutral-300">
+                    <span class="text-md px-2 py-1 rounded-full bg-white/10 text-neutral-300">
                       {tech}
                     </span>
                   ))}
                 </div>
-                
+
                 <div class="mt-auto flex justify-between items-center">
-                  <a 
-                    href={lang === "es" ? `/es/${project.data.slug}` : `/${project.data.slug}`}
+                  <a
+                    href={
+                      lang === "es"
+                        ? `/es/${project.data.slug}`
+                        : `/${project.data.slug}`
+                    }
                     class="flex items-center gap-2 text-sm font-semibold text-tertiary-400 hover:text-tertiary-200 transition-colors"
                   >
                     {lang === "es" ? "Ver detalles" : "View details"}
                     <Icon name="Link" class="w-4 h-4" />
                   </a>
-                  <a 
-                    href={project.data.github} 
+                  <a
+                    href={project.data.github}
                     target="_blank"
                     class="p-2 rounded-full bg-white/5 hover:bg-white/10 transition-colors"
                     aria-label="GitHub"
@@ -131,9 +175,8 @@ const LatestProjects = lang === "es" ? LatestProjectsEs : LatestProjectsEn;
               </div>
             </div>
           </StaggerItem>
-        ))}
-      </StaggerContainer>
-    </div>
-
+        ))
+      }
+    </StaggerContainer>
   </div>
 </LayoutSection>

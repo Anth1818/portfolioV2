@@ -40,9 +40,10 @@ export const Reveal = ({ children, delay = 0, width = "fit-content", overflow = 
   );
 };
 
-export const StaggerContainer = ({ children, delay = 0 }: MotionSectionProps) => {
+export const StaggerContainer = ({ children, className, delay = 0 }: MotionSectionProps) => {
   return (
     <motion.div
+      className={className}
       variants={{
         hidden: { opacity: 0 },
         visible: {

@@ -10,7 +10,8 @@ const projectsEn = defineCollection({
         note: z.string(),
         github: z.string().url(),
         slug: z.string(),
-        id: z.string()
+        id: z.string(),
+        year: z.string()
     }),
 });
 
@@ -23,7 +24,8 @@ const projectsEs = defineCollection({
         note: z.string(),
         github: z.string().url(),
         slug: z.string(),
-        id: z.string()
+        id: z.string(),
+        year: z.string()
     }),
 });
 
@@ -36,7 +38,8 @@ const latestProjectsEn = defineCollection({
         note: z.string(),
         github: z.string().url(),
         slug: z.string(),
-        id: z.string()
+        id: z.string(),
+        year: z.string()
     }),
 });
 
@@ -49,7 +52,8 @@ const latestProjectsEs = defineCollection({
         note: z.string(),
         github: z.string().url(),
         slug: z.string(),
-        id: z.string()
+        id: z.string(),
+        year: z.string()
     }),
 });
 

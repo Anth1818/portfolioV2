@@ -32,6 +32,7 @@ techStack:
   - "Prisma"
   - "PostgreSQL"
 
+year: "2025 - 2026"
 ---
 
 **SIGESTEI** es una aplicación web construida con Next.js para centralizar la gestión operativa y administrativa de recursos tecnológicos dentro de una institución o empresa.

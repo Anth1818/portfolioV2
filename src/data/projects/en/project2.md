@@ -24,6 +24,8 @@ techStack:
   - "React"
   - "Nodejs"
   - "PostgreSQL"
+
+year: "2024"
 ---
 
 **Worker-ID-generator-system.** The system enables the seamless generation of employee identification cards, streamlining the management process and significantly enhancing organizational efficiency. Developed in 2024, it features a React-powered frontend that delivers a responsive and interactive user experience. The backend, built with Node.js, ensures swift and reliable request processing, while PostgreSQL serves as the database, securely storing and managing identification data. Designed to be intuitive and efficient, the system allows users to effortlessly generate and manage employee IDs, optimizing workflow and administrative operations.
