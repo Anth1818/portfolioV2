@@ -37,10 +37,10 @@ export default function ContactForm({ lang }: ContactFormProps) {
     setLoading(true);
     try {
       await emailjs.sendForm(
-        "contact_service", 
+        "service_xkwo2gw", 
         "contact_template", 
         formRef.current!,
-        { publicKey: "hdrmesVs7buYxAVih" } 
+        { publicKey: "psNPTvR1sEGIIi_vO" } 
       );
       if (lang === "es") {
         window.location.href = "/EmailSentEs";
@@ -48,6 +48,7 @@ export default function ContactForm({ lang }: ContactFormProps) {
         window.location.href = "/EmailSent";
       }
     } catch (error) {
+      console.log("Error sending email:", error);
       if (lang === "es") {
         alert("Error al enviar el email, por favor intente nuevamente");
       } else {
