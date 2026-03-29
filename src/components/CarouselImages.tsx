@@ -44,7 +44,7 @@ export function CarouselImg({arrayImg, slug}: CarouselImgProps) {
                   <img
                     src={arrayImg[index]}
                     alt={`Image ${index + 1}`}
-                    className="h-full w-full rounded-lg object-cover"
+                    className="md:object-fill rounded-lg"
                     loading="lazy"
                   />
                 </CardContent>
