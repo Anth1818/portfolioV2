@@ -34,17 +34,17 @@ export function CarouselImg({arrayImg, slug}: CarouselImgProps) {
   }, [api])
 
   return (
-    <div className="mx-auto md:w-[1080px] px-2 py-4">
+    <div className="mx-auto w-full max-w-[1080px] px-2 py-4">
      <Carousel setApi={setApi} className="w-full">
         <CarouselContent >
           {arrayImg.map((_, index) => (
             <CarouselItem key={index} >
               <Card >
-                <CardContent className="flex md:w-[1080px] md:h-[500px] xs:w-[300px] aspect-square items-center justify-center p-6">
+                <CardContent className="flex h-[240px] w-full items-center justify-center overflow-hidden p-0 sm:h-[320px] md:h-[550px]">
                   <img
                     src={arrayImg[index]}
                     alt={`Image ${index + 1}`}
-                    className=" md:object-fill rounded-lg "
+                    className="h-full w-full rounded-lg object-cover"
                     loading="lazy"
                   />
                 </CardContent>
@@ -52,8 +52,8 @@ export function CarouselImg({arrayImg, slug}: CarouselImgProps) {
             </CarouselItem>
           ))}
         </CarouselContent>
-        <CarouselPrevious className="hidden md:flex left-2 top-1/2 z-10 -translate-y-1/2 bg-background/90 shadow-md hover:bg-background" />
-        <CarouselNext className="hidden md:flex right-2 top-1/2 z-10 -translate-y-1/2 bg-background/90 shadow-md hover:bg-background" />
+        <CarouselPrevious className="left-2 top-1/2 z-10 -translate-y-1/2 border bg-background/95 shadow-md hover:bg-background disabled:opacity-60" />
+        <CarouselNext className="right-2 top-1/2 z-10 -translate-y-1/2 border bg-background/95 shadow-md hover:bg-background disabled:opacity-60" />
       </Carousel>
       <div className="py-2 text-center text-sm text-muted-foreground">
         Slide {current} of {count}
