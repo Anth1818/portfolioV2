@@ -1,5 +1,6 @@
 ---
 import Layout from "@/layouts/Layout.astro";
+import emailSentGif from "@/assets/emailSent.gif";
 ---
 
 <Layout>
@@ -13,7 +14,7 @@ import Layout from "@/layouts/Layout.astro";
         Correo Enviado
       </h2>
       <img
-        src="src/assets/emailSent.gif"
+        src={emailSentGif.src}
         alt="Correo Enviado"
         class="w-[150px] h-[150px]" 
       />
